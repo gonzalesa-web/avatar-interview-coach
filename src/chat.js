@@ -1,36 +1,100 @@
-module.exports = async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método no permitido' })
-    }
+let historial = [];
 
-    const apiKey = process.env.GEMINI_API_KEY
+export function inicializarChat() {
+    const input = document.getElementById('message-input');
+    const btnEnviar = document.getElementById('send-btn');
 
-    if (!apiKey) {
-        return res.status(500).json({ error: 'API key no encontrada', env: Object.keys(process.env) })
-    }
+    btnEnviar?.addEventListener('click', enviarMensaje);
 
-    const { mensaje } = req.body
+    input?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            enviarMensaje();
+        }
+    });
+
+    input?.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    });
+}
+
+export async function enviarMensaje() {
+    const input = document.getElementById('message-input');
+    const texto = input?.value.trim();
+    if (!texto) return;
+
+    input.value = '';
+    input.style.height = 'auto';
+
+    historial.push({ rol: 'usuario', contenido: texto });
+    mostrarMensaje(texto, 'user');
+    mostrarEscribiendo();
 
     try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const respuesta = await fetch('/api/chat', {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'mistralai/mistral-7b-instruct:free',
-                messages: [
-                    { role: 'user', content: mensaje || 'hola' }
-                ],
-                max_tokens: 100
+                mensaje: texto,
+                historial: historial
             })
-        })
+        });
 
-        const data = await response.json()
-        return res.status(200).json({ respuesta: data.choices?.[0]?.message?.content || JSON.stringify(data) })
+        const datos = await respuesta.json();
 
+        if (respuesta.ok) {
+            const mensajeAang = datos.respuesta;
+            historial.push({ rol: 'aang', contenido: mensajeAang });
+            quitarEscribiendo();
+            mostrarMensaje(mensajeAang, 'mentor');
+        } else {
+            quitarEscribiendo();
+            mostrarMensaje(datos.error || 'Hmm, parece que los espíritus están bloqueando la conexión. Intenta de nuevo 🙏', 'mentor');
+        }
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        quitarEscribiendo();
+        mostrarMensaje('Error de conexión. Los vientos del aire no soplan a nuestro favor 🌪️', 'mentor');
     }
+}
+
+function mostrarMensaje(texto, rol) {
+    const contenedor = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = `message ${rol}`;
+
+    if (rol === 'mentor') {
+        div.innerHTML = `
+            <div class="message-avatar">🌪️</div>
+            <div class="message-content">${texto}</div>
+        `;
+    } else {
+        div.innerHTML = `
+            <div class="message-content">${texto}</div>
+        `;
+    }
+
+    contenedor?.appendChild(div);
+    contenedor.scrollTop = contenedor.scrollHeight;
+}
+
+function mostrarEscribiendo() {
+    const contenedor = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = 'message mentor';
+    div.id = 'typing-indicator';
+    div.innerHTML = `
+        <div class="message-avatar">🌪️</div>
+        <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    `;
+    contenedor?.appendChild(div);
+    contenedor.scrollTop = contenedor.scrollHeight;
+}
+
+function quitarEscribiendo() {
+    document.getElementById('typing-indicator')?.remove();
 }
