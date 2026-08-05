@@ -1,17 +1,16 @@
-module.exports = async function handler(req, res) {
+const https = require('https')
 
-    // Solo aceptar POST
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método no permitido' });
+        return res.status(405).json({ error: 'Método no permitido' })
     }
 
-    const { mensaje, historial = [] } = req.body;
+    const { mensaje, historial = [] } = req.body
 
     if (!mensaje) {
-        return res.status(400).json({ error: 'Mensaje requerido' });
+        return res.status(400).json({ error: 'Mensaje requerido' })
     }
 
-    // ==================== SYSTEM PROMPT DE AANG ====================
     const systemPrompt = `Eres Avatar Aang de la serie "Avatar: La Leyenda de Aang". 
 Tu rol es actuar como un coach de entrevistas laborales, pero SIEMPRE manteniéndote en personaje como Aang.
 
@@ -20,17 +19,16 @@ PERSONALIDAD:
 - Hablas con calma y sabiduría, como lo haría Aang en la serie
 - Usas analogías de los cuatro elementos para explicar conceptos
 - Eres motivador y empático
-- Ocasionalmente mencionas a tus amigos (Katara, Sokka, Toph, Zuko) como ejemplos
 - NUNCA rompes el personaje
 - NUNCA dices que eres una IA o ChatGPT
 - SIEMPRE respondes como Aang
 - SIEMPRE respondes en español
 
 LOS CUATRO ELEMENTOS COMO SOFT SKILLS:
-- 🌊 Agua = Comunicación y empatía (fluir con el interlocutor)
-- 🌍 Tierra = Seguridad y confianza (ser firme y estable)
-- 🔥 Fuego = Liderazgo y determinación (actuar con pasión)
-- 🌪️ Aire = Adaptabilidad y creatividad (ser flexible ante lo inesperado)
+- 🌊 Agua = Comunicación y empatía
+- 🌍 Tierra = Seguridad y confianza
+- 🔥 Fuego = Liderazgo y determinación
+- 🌪️ Aire = Adaptabilidad y creatividad
 
 TU MISIÓN:
 - Ayudar al usuario a prepararse para entrevistas laborales
@@ -39,67 +37,75 @@ TU MISIÓN:
 - Enseñar soft skills usando filosofía Avatar
 - Dar consejos prácticos con el estilo de Aang
 
-FORMATO DE RESPUESTAS:
+FORMATO:
 - Respuestas cortas y conversacionales (máximo 3 párrafos)
 - Usa emojis de los elementos ocasionalmente 🌊🌍🔥🌪️
 - Siempre termina motivando al usuario
-- Habla en español siempre`;
+- Habla en español siempre`
 
-    // ==================== CONSTRUIR MENSAJES ====================
     const messages = [
         { role: 'system', content: systemPrompt }
-    ];
+    ]
 
-    // Agregar historial previo
     historial.forEach(msg => {
         if (msg.rol === 'usuario') {
-            messages.push({ role: 'user', content: msg.contenido });
+            messages.push({ role: 'user', content: msg.contenido })
         } else if (msg.rol === 'aang') {
-            messages.push({ role: 'assistant', content: msg.contenido });
+            messages.push({ role: 'assistant', content: msg.contenido })
         }
-    });
+    })
 
-    // Agregar mensaje actual
-    messages.push({ role: 'user', content: mensaje });
+    messages.push({ role: 'user', content: mensaje })
 
-    // ==================== LLAMAR A OPENROUTER ====================
+    const body = JSON.stringify({
+        model: 'mistralai/mistral-7b-instruct:free',
+        messages: messages,
+        max_tokens: 500,
+        temperature: 0.8
+    })
+
     try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.GEMINI_API_KEY}`,
-                'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://avatar-interview-coach.vercel.app',
-                'X-Title': 'Avatar Interview Coach'
-            },
-            body: JSON.stringify({
-                model: 'mistralai/mistral-7b-instruct:free',
-                messages: messages,
-                max_tokens: 500,
-                temperature: 0.8
+        const respuesta = await new Promise((resolve, reject) => {
+            const options = {
+                hostname: 'openrouter.ai',
+                path: '/api/v1/chat/completions',
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.GEMINI_API_KEY}`,
+                    'Content-Type': 'application/json',
+                    'HTTP-Referer': 'https://avatar-interview-coach.vercel.app',
+                    'X-Title': 'Avatar Interview Coach',
+                    'Content-Length': Buffer.byteLength(body)
+                }
+            }
+
+            const reqHttp = https.request(options, (res) => {
+                let data = ''
+                res.on('data', chunk => data += chunk)
+                res.on('end', () => {
+                    try {
+                        resolve(JSON.parse(data))
+                    } catch (e) {
+                        reject(new Error('Error parsing response'))
+                    }
+                })
             })
-        });
 
-        const data = await response.json();
+            reqHttp.on('error', reject)
+            reqHttp.write(body)
+            reqHttp.end()
+        })
 
-        if (!response.ok) {
-            console.error('Error OpenRouter:', data);
-            return res.status(500).json({
-                error: 'Error al conectar con la IA',
-                detalle: data.error?.message
-            });
+        const texto = respuesta.choices?.[0]?.message?.content
+
+        if (!texto) {
+            return res.status(500).json({ error: 'No se recibió respuesta' })
         }
 
-        const respuesta = data.choices[0]?.message?.content;
-
-        if (!respuesta) {
-            return res.status(500).json({ error: 'No se recibió respuesta' });
-        }
-
-        return res.status(200).json({ respuesta });
+        return res.status(200).json({ respuesta: texto })
 
     } catch (error) {
-        console.error('Error:', error);
-        return res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error:', error.message)
+        return res.status(500).json({ error: 'Error interno del servidor' })
     }
 }
