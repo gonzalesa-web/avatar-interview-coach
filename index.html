@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Interview Coach</title>
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- ========== HOME VIEW ========== -->
+        <div id="home-view" class="view">
+            <div class="home-container">
+
+                <div class="home-bg">
+                    <div class="orb orb-1"></div>
+                    <div class="orb orb-2"></div>
+                    <div class="orb orb-3"></div>
+                </div>
+
+                <header class="home-header">
+                    <div class="logo">
+                        <span class="logo-icon">🌪️</span>
+                        <span class="logo-text">Avatar Interview Coach</span>
+                    </div>
+                    <nav class="home-nav">
+                        <a href="/about" class="nav-link" id="nav-about">Acerca de</a>
+                    </nav>
+                </header>
+
+                <main class="home-main">
+                    <div class="hero-section">
+                        <div class="hero-badge">✨ Entrenamiento con Aang</div>
+                        <h1 class="hero-title">
+                            Encuentra el <span class="highlight">equilibrio</span><br>
+                            para tu próxima entrevista
+                        </h1>
+                        <p class="hero-desc">
+                            Avatar Aang te guiará usando la sabiduría de los cuatro elementos 
+                            para prepararte y ganar confianza en entrevistas laborales.
+                        </p>
+                        <button id="start-chat-btn" class="btn-hero">
+                            Comenzar Entrenamiento 
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+
+                    <div class="elements-section">
+                        <div class="element-card element-water">
+                            <div class="element-icon">🌊</div>
+                            <h3>Agua</h3>
+                            <p>Comunicación y empatía</p>
+                        </div>
+                        <div class="element-card element-earth">
+                            <div class="element-icon">🌍</div>
+                            <h3>Tierra</h3>
+                            <p>Seguridad y confianza</p>
+                        </div>
+                        <div class="element-card element-fire">
+                            <div class="element-icon">🔥</div>
+                            <h3>Fuego</h3>
+                            <p>Liderazgo y determinación</p>
+                        </div>
+                        <div class="element-card element-air">
+                            <div class="element-icon">🌪️</div>
+                            <h3>Aire</h3>
+                            <p>Adaptabilidad y creatividad</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-questions">
+                        <p class="quick-label">Practica preguntas como:</p>
+                        <div class="questions-grid">
+                            <span class="question-tag">Háblame de ti</span>
+                            <span class="question-tag">¿Cuál es tu mayor debilidad?</span>
+                            <span class="question-tag">¿Por qué deberíamos contratarte?</span>
+                            <span class="question-tag">¿Dónde te ves en 5 años?</span>
+                            <span class="question-tag">¿Cómo manejas la presión?</span>
+                            <span class="question-tag">Cuéntame de un conflicto</span>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- ========== CHAT VIEW ========== -->
+        <div id="chat-view" class="view hidden">
+            <div class="chat-container">
+
+                <header class="chat-header">
+                    <button id="back-btn" class="btn-icon-header">← Salir</button>
+                    <div class="aang-info">
+                        <div class="aang-avatar">🌪️</div>
+                        <div>
+                            <h2>Avatar Aang</h2>
+                            <span class="aang-status">● En línea</span>
+                        </div>
+                    </div>
+                    <button id="about-btn" class="btn-icon-header">ℹ️</button>
+                </header>
+
+                <div class="elements-bar">
+                    <span class="elem-tag water">🌊 Agua</span>
+                    <span class="elem-tag earth">🌍 Tierra</span>
+                    <span class="elem-tag fire">🔥 Fuego</span>
+                    <span class="elem-tag air">🌪️ Aire</span>
+                </div>
+
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message mentor">
+                        <div class="message-avatar">🌪️</div>
+                        <div class="message-content">
+                            ¡Saludos, amigo! Soy Aang. Así como dominar los cuatro elementos requiere equilibrio, una entrevista exitosa también. Estoy aquí para entrenar contigo. 🙏
+                            <br><br>
+                            Puedes preguntarme cómo responder preguntas difíciles, practicar respuestas conmigo, o pedirme consejos sobre soft skills. ¿Por dónde empezamos?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions-bar">
+                    <button class="suggestion-btn" data-text="Háblame de ti">Háblame de ti</button>
+                    <button class="suggestion-btn" data-text="¿Cuál es tu mayor debilidad?">Mi mayor debilidad</button>
+                    <button class="suggestion-btn" data-text="¿Por qué deberíamos contratarte?">¿Por qué contratarme?</button>
+                    <button class="suggestion-btn" data-text="¿Cómo manejas el trabajo bajo presión?">Trabajo bajo presión</button>
+                </div>
+
+                <div class="chat-footer">
+                    <div class="input-wrapper">
+                        <textarea
+                            id="message-input"
+                            placeholder="Escribe tu pregunta o practica una respuesta..."
+                            class="message-input"
+                            rows="1"
+                        ></textarea>
+                        <button id="send-btn" class="btn-send">
+                            Enviar →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========== ABOUT VIEW ========== -->
+        <div id="about-view" class="view hidden">
+            <div class="about-container">
+
+                <header class="about-header">
+                    <button id="back-from-about-btn" class="btn-icon-header">← Volver</button>
+                    <h1>Acerca de</h1>
+                </header>
+
+                <div class="about-content">
+
+                    <section class="about-hero">
+                        <div class="about-avatar">🌪️</div>
+                        <h2>Avatar Interview Coach</h2>
+                        <p>Una experiencia única donde Avatar Aang te entrena para entrevistas laborales usando la filosofía de los cuatro elementos.</p>
+                    </section>
+
+                    <section class="about-section">
+                        <h3>🎯 ¿Qué puedes practicar?</h3>
+                        <ul class="about-list">
+                            <li>✅ Preguntas reales de entrevistas laborales</li>
+                            <li>✅ Habilidades blandas (soft skills)</li>
+                            <li>✅ Comunicación efectiva</li>
+                            <li>✅ Confianza y liderazgo</li>
+                            <li>✅ Adaptabilidad y creatividad</li>
+                            <li>✅ Manejo de situaciones difíciles</li>
+                        </ul>
+                    </section>
+
+                    <section class="about-section">
+                        <h3>⚡ Los Cuatro Elementos</h3>
+                        <div class="elements-about">
+                            <div class="elem-about water">
+                                <span>🌊</span>
+                                <div>
+                                    <h4>Agua — Comunicación</h4>
+                                    <p>Fluye con empatía. Escucha activamente y comunica con claridad.</p>
+                                </div>
+                            </div>
+                            <div class="elem-about earth">
+                                <span>🌍</span>
+                                <div>
+                                    <h4>Tierra — Confianza</h4>
+                                    <p>Sé firme como la roca. Tu estabilidad inspira confianza.</p>
+                                </div>
+                            </div>
+                            <div class="elem-about fire">
+                                <span>🔥</span>
+                                <div>
+                                    <h4>Fuego — Liderazgo</h4>
+                                    <p>Impulsa con pasión. Muestra iniciativa y determinación.</p>
+                                </div>
+                            </div>
+                            <div class="elem-about air">
+                                <span>🌪️</span>
+                                <div>
+                                    <h4>Aire — Adaptabilidad</h4>
+                                    <p>Fluye sin resistencia. Adáptate con creatividad.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="about-section">
+                        <h3>💡 Consejos de Aang</h3>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span>🗣️</span>
+                                <p>Piensa en voz alta y explica tu razonamiento</p>
+                            </div>
+                            <div class="tip-card">
+                                <span>❓</span>
+                                <p>Haz preguntas antes de responder</p>
+                            </div>
+                            <div class="tip-card">
+                                <span>📖</span>
+                                <p>Usa ejemplos reales de tu experiencia</p>
+                            </div>
+                            <div class="tip-card">
+                                <span>🙏</span>
+                                <p>Sé honesto cuando no sabes algo</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <button id="back-to-chat-btn" class="btn-hero" style="width:100%; margin-top: 20px;">
+                        Volver al Entrenamiento →
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+</body>
+</html>
