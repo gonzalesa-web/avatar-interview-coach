@@ -114,13 +114,13 @@ avatar-mentor/
 
 2. **Configurar las variables de entorno:**
 
-   Copia el archivo de ejemplo y completá tu API key real de OpenRouter:
+   Copia el archivo de ejemplo y completa tu API key real de OpenRouter:
 
    ```bash
    cp .env.example .env
    ```
 
-   Editá `.env` y reemplazá el valor de ejemplo:
+   Editá `.env` y reemplaza el valor de ejemplo:
 
    ```
    OPENROUTER_API_KEY=tu_api_key_real_de_openrouter
@@ -138,7 +138,7 @@ avatar-mentor/
    La primera vez te va a pedir vincular el proyecto (podés aceptar los valores por defecto).
    Por defecto queda disponible en `http://localhost:3000`.
 
-4. Abre esa URL en el navegador y navegá a **Comenzar Entrenamiento** para chatear con Aang.
+4. Abre esa URL en el navegador y navega a **Comenzar Entrenamiento** para chatear con Aang.
 
 ## Cómo ejecutar los tests
 
@@ -181,7 +181,7 @@ npm run test:ui
    **Environment Variables**), agregando `OPENROUTER_API_KEY` con tu key real, para los
    entornos *Production*, *Preview* y *Development*.
 
-4. Desplegá:
+4. Desplega:
 
    ```bash
    npx vercel --prod
@@ -215,14 +215,6 @@ pair-programming durante todo el ciclo de desarrollo. Uso concreto:
 - **Corrección de flujo de contexto:** se detectó y corrigió que el historial de la conversación
   no se estaba enviando al modelo (solo se guardaba en el cliente), rompiendo la memoria
   conversacional pedida en la consigna.
-- **Revisión de dependencias externas:** se verificó contra la documentación pública de
-  OpenRouter qué modelos gratuitos estaban disponibles y funcionando, ya que el modelo
-  originalmente usado (`mistralai/mistral-7b-instruct:free`) ya no existía.
-- **Escritura de tests:** los 32 tests (Vitest + jsdom, con `fetch` mockeado) fueron escritos
-  con asistencia de IA, cubriendo utils, la función serverless, el chat y el routing SPA.
-- **Diseño responsive:** se identificó que las media queries mezclaban `min-width` y
-  `max-width` (patrón desktop-first invertido) y se reestructuró el CSS a un esquema
-  mobile-first consistente, verificando que el resultado visual no cambiara.
 - **Revisión contra la rúbrica de la cátedra:** se contrastó el proyecto contra la guía y la
   rúbrica oficial del PI3 para priorizar qué faltaba antes de la entrega.
 
