@@ -114,7 +114,7 @@ avatar-mentor/
 
 2. **Configurar las variables de entorno:**
 
-   Copiá el archivo de ejemplo y completá tu API key real de OpenRouter:
+   Copia el archivo de ejemplo y completá tu API key real de OpenRouter:
 
    ```bash
    cp .env.example .env
@@ -138,7 +138,7 @@ avatar-mentor/
    La primera vez te va a pedir vincular el proyecto (podés aceptar los valores por defecto).
    Por defecto queda disponible en `http://localhost:3000`.
 
-4. Abrí esa URL en el navegador y navegá a **Comenzar Entrenamiento** para chatear con Aang.
+4. Abre esa URL en el navegador y navegá a **Comenzar Entrenamiento** para chatear con Aang.
 
 ## Cómo ejecutar los tests
 
@@ -157,7 +157,7 @@ Esto ejecuta 4 archivos de test (32 casos en total):
 - `tests/chat.test.js` — envío de mensajes, renderizado y el estado visual de error, con
   `fetch` mockeado.
 
-También podés usar la UI interactiva de Vitest:
+También puedes usar la UI interactiva de Vitest:
 
 ```bash
 npm run test:ui
@@ -165,19 +165,19 @@ npm run test:ui
 
 ## Cómo desplegar a Vercel
 
-1. Instalá y autenticá la CLI de Vercel (una sola vez):
+1. Instala y autentica la CLI de Vercel (una sola vez):
 
    ```bash
    npx vercel login
    ```
 
-2. Vinculá el proyecto (si todavía no está vinculado):
+2. Vincula el proyecto (si todavía no está vinculado):
 
    ```bash
    npx vercel link
    ```
 
-3. Configurá la variable de entorno en Vercel (Dashboard → tu proyecto → **Settings** →
+3. Configura la variable de entorno en Vercel (Dashboard → tu proyecto → **Settings** →
    **Environment Variables**), agregando `OPENROUTER_API_KEY` con tu key real, para los
    entornos *Production*, *Preview* y *Development*.
 
