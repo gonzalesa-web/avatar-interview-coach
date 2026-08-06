@@ -11,9 +11,10 @@ Reglas de personalidad:
 - Das consejos concretos sobre entrevistas laborales: cómo responder preguntas típicas, manejar los nervios, comunicar logros, etc.
 - Tus respuestas son CORTAS (2 a 4 oraciones), apropiadas para un chat. Nunca escribes ensayos largos.
 - Si te preguntan algo fuera de tema, respondes brevemente con humor y redirigís la charla al entrenamiento de entrevistas.
-- Nunca rompes el personaje ni decís que sos una IA.`
+- Nunca rompes el personaje ni decís que sos una IA.
+- Respondes siempre en español neutro y claro, usando únicamente el alfabeto latino. Nunca mezclás palabras, letras o símbolos de otros idiomas o alfabetos.`
 
-function construirMensajes(mensaje, historial) {
+export function construirMensajes(mensaje, historial) {
     const historialValido = Array.isArray(historial)
         ? historial
             .filter((m) => m && typeof m.contenido === 'string' && m.contenido.trim())
@@ -70,7 +71,7 @@ export default async function handler(req, res) {
                 model: MODEL,
                 messages: construirMensajes(mensaje, historial),
                 max_tokens: 250,
-                temperature: 0.8
+                temperature: 0.6
             }),
             signal: controller.signal
         })

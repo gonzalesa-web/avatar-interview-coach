@@ -120,7 +120,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
+    padding: 15px 20px;
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(10px);
     background: rgba(10, 10, 15, 0.5);
@@ -138,7 +138,7 @@ body {
 
 .logo-text {
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text);
     letter-spacing: 1px;
@@ -167,7 +167,7 @@ body {
     position: relative;
     z-index: 10;
     flex: 1;
-    padding: 60px 30px 40px;
+    padding: 40px 20px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,7 +195,7 @@ body {
 
 .hero-title {
     font-family: 'Cinzel', serif;
-    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 20px;
@@ -220,13 +220,15 @@ body {
 .btn-hero {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    padding: 16px 36px;
+    width: 100%;
+    padding: 14px 28px;
     background: linear-gradient(135deg, #4facde 0%, #52b788 100%);
     color: white;
     border: none;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -250,14 +252,14 @@ body {
 
 .elements-section {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 15px;
     width: 100%;
     margin-bottom: 40px;
 }
 
 .element-card {
-    padding: 20px;
+    padding: 15px;
     border-radius: 16px;
     border: 1px solid var(--border);
     background: var(--bg-card);
@@ -343,7 +345,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 12px 15px;
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
     gap: 15px;
@@ -369,7 +371,7 @@ body {
 }
 
 .aang-info h2 {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Cinzel', serif;
     margin: 0;
@@ -469,10 +471,10 @@ body {
 }
 
 .message-content {
-    max-width: 70%;
+    max-width: 90%;
     padding: 14px 18px;
     border-radius: 16px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.7;
     word-wrap: break-word;
 }
@@ -488,6 +490,17 @@ body {
     background: linear-gradient(135deg, #4facde, #52b788);
     color: white;
     border-top-right-radius: 4px;
+}
+
+.message.error .message-content {
+    background: var(--fire-light);
+    border-color: rgba(239, 68, 68, 0.35);
+    color: #7a1f1f;
+}
+
+.message.error .message-avatar {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.35);
 }
 
 .typing-indicator {
@@ -520,7 +533,7 @@ body {
 .suggestions-bar {
     display: flex;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 8px 15px;
     background: var(--bg-card);
     border-top: 1px solid var(--border);
     overflow-x: auto;
@@ -545,7 +558,7 @@ body {
 }
 
 .chat-footer {
-    padding: 15px 20px;
+    padding: 12px 15px;
     background: var(--bg-card);
     border-top: 1px solid var(--border);
 }
@@ -632,14 +645,14 @@ body {
 
 .about-header h1 {
     font-family: 'Cinzel', serif;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: var(--text);
     flex: 1;
     text-align: center;
 }
 
 .about-content {
-    padding: 30px 25px;
+    padding: 20px 15px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -746,7 +759,7 @@ body {
 
 .tips-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 12px;
 }
 
@@ -768,89 +781,85 @@ body {
     flex-shrink: 0;
 }
 
-/* ==================== RESPONSIVE ==================== */
-@media (min-width: 768px) {
+/* ==================== RESPONSIVE (mobile-first) ====================
+   Base (arriba) = estilos para celular. Cada breakpoint agrega/ajusta
+   estilos hacia pantallas más grandes, nunca al revés. */
+@media (min-width: 481px) {
+    .btn-hero {
+        width: auto;
+        padding: 16px 36px;
+        font-size: 1rem;
+        justify-content: flex-start;
+    }
+
     .elements-section {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .hero-title {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .home-header {
-        padding: 15px 20px;
+    .element-card {
+        padding: 20px;
     }
 
-    .logo-text {
-        font-size: 0.85rem;
-    }
-
-    .home-main {
-        padding: 40px 20px 30px;
+    .message-content {
+        max-width: 85%;
+        font-size: 0.95rem;
     }
 
     .hero-title {
         font-size: 1.8rem;
     }
 
-    .message-content {
-        max-width: 85%;
-    }
-
-    .tips-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .about-content {
-        padding: 20px 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 1.5rem;
-    }
-
-    .btn-hero {
-        padding: 14px 28px;
-        font-size: 0.95rem;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .elements-section {
-        grid-template-columns: 1fr;
-    }
-
-    .element-card {
-        padding: 15px;
-    }
-
-    .message-content {
-        max-width: 90%;
-        font-size: 0.9rem;
-    }
-
     .chat-header {
-        padding: 12px 15px;
+        padding: 15px 20px;
     }
 
     .aang-info h2 {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .suggestions-bar {
-        padding: 8px 15px;
+        padding: 10px 20px;
     }
 
     .chat-footer {
-        padding: 12px 15px;
+        padding: 15px 20px;
     }
 
     .about-header h1 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .home-header {
+        padding: 20px 30px;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+    }
+
+    .home-main {
+        padding: 60px 30px 40px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .message-content {
+        max-width: 70%;
+    }
+
+    .elements-section {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tips-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-content {
+        padding: 30px 25px;
     }
 }

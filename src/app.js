@@ -2,12 +2,12 @@ import { inicializarChat } from './chat.js';
 
 // ==================== NAVEGACIÓN ====================
 
-function navegar(ruta) {
+export function navegar(ruta) {
     window.history.pushState({}, '', ruta);
     renderizarVista(ruta);
 }
 
-function renderizarVista(ruta) {
+export function renderizarVista(ruta) {
     document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
 
     if (ruta === '/' || ruta === '/home' || ruta === '/inicio') {

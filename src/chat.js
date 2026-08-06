@@ -50,18 +50,18 @@ export async function enviarMensaje() {
             mostrarMensaje(mensajeAang, 'mentor');
         } else {
             quitarEscribiendo();
-            mostrarMensaje(datos.error || 'Hmm, parece que los espíritus están bloqueando la conexión. Intenta de nuevo 🙏', 'mentor');
+            mostrarMensaje(datos.error || 'Hmm, parece que los espíritus están bloqueando la conexión. Intenta de nuevo 🙏', 'mentor', true);
         }
     } catch (error) {
         quitarEscribiendo();
-        mostrarMensaje('Error de conexión. Los vientos del aire no soplan a nuestro favor 🌪️', 'mentor');
+        mostrarMensaje('Error de conexión. Los vientos del aire no soplan a nuestro favor 🌪️', 'mentor', true);
     }
 }
 
-function mostrarMensaje(texto, rol) {
+function mostrarMensaje(texto, rol, esError = false) {
     const contenedor = document.getElementById('chat-messages');
     const div = document.createElement('div');
-    div.className = `message ${rol}`;
+    div.className = `message ${rol}${esError ? ' error' : ''}`;
 
     if (rol === 'mentor') {
         div.innerHTML = `
