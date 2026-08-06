@@ -1,6 +1,6 @@
 import { inicializarChat } from './chat.js';
 
-// ==================== NAVEGACIÓN ====================
+
 
 export function navegar(ruta) {
     window.history.pushState({}, '', ruta);
@@ -29,41 +29,41 @@ window.addEventListener('popstate', () => {
     renderizarVista(window.location.pathname);
 });
 
-// ==================== EVENTOS ====================
+
 
 function configurarEventos() {
-    // HOME → CHAT
+   
     document.getElementById('start-chat-btn')?.addEventListener('click', () => {
         navegar('/chat');
     });
 
-    // HOME → ABOUT (link del nav)
+    
     document.getElementById('nav-about')?.addEventListener('click', (e) => {
         e.preventDefault();
         navegar('/about');
     });
 
-    // CHAT → HOME
+    
     document.getElementById('back-btn')?.addEventListener('click', () => {
         navegar('/home');
     });
 
-    // CHAT → ABOUT
+    
     document.getElementById('about-btn')?.addEventListener('click', () => {
         navegar('/about');
     });
 
-    // ABOUT → HOME
+    
     document.getElementById('back-from-about-btn')?.addEventListener('click', () => {
         navegar('/home');
     });
 
-    // ABOUT → CHAT
+   
     document.getElementById('back-to-chat-btn')?.addEventListener('click', () => {
         navegar('/chat');
     });
 
-    // SUGERENCIAS de preguntas
+    
     document.querySelectorAll('.suggestion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const texto = btn.getAttribute('data-text');
@@ -76,7 +76,7 @@ function configurarEventos() {
     });
 }
 
-// ==================== INICIO ====================
+
 
 document.addEventListener('DOMContentLoaded', () => {
     configurarEventos();

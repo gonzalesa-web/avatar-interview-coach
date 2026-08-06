@@ -60,7 +60,6 @@ body {
     display: none !important;
 }
 
-/* ==================== HOME ==================== */
 .home-container {
     position: relative;
     width: 100%;
@@ -330,7 +329,7 @@ body {
     color: var(--water);
 }
 
-/* ==================== CHAT ==================== */
+
 .chat-container {
     width: 100%;
     max-width: 800px;
@@ -619,7 +618,6 @@ body {
     transform: scale(0.98);
 }
 
-/* ==================== ABOUT ==================== */
 .about-container {
     width: 100%;
     max-width: 800px;
@@ -781,9 +779,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ==================== RESPONSIVE (mobile-first) ====================
-   Base (arriba) = estilos para celular. Cada breakpoint agrega/ajusta
-   estilos hacia pantallas más grandes, nunca al revés. */
 @media (min-width: 481px) {
     .btn-hero {
         width: auto;
